@@ -23,7 +23,7 @@ function Header() {
     <header className="header" style={{display:"flex", justifyContent:"space-between", alignItems:"center"}}>
 
       <div className="flex-row">
-        <BiLogoShopify style={{fontSize:70 }}/>
+        <BiLogoShopify style={{fontSize:7}}/>
         <p className="logo-text">Abdullah Shop Center</p>
       </div>
 
