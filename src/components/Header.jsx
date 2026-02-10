@@ -1,24 +1,17 @@
-import { useState, useEffect } from "react";
 import "../css/Header.css";
 import { CiShoppingBasket, CiLight } from "react-icons/ci";
 import { IoIosMoon } from "react-icons/io";
 import { BiLogoShopify } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import Badge from "@mui/material/Badge";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useDispatch, useSelector } from "react-redux";
+import { setDrawer } from "../redux/slices/basketSlice";
 function Header() {
-  const [dark, setDark] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const root = document.getElementById("root");
-
-    if (dark) {
-      root.style.backgroundColor = "#000";
-      root.style.color = "#fff";
-    } else {
-      root.style.backgroundColor = "#fff";
-      root.style.color = "#000";
-    }
-  }, [dark]);
+  const dispatch = useDispatch();  
+  const {products} = useSelector((store) => store.basket)
+  
 
   return (
     <header
@@ -32,10 +25,7 @@ function Header() {
       <div className="flex-row">
         <BiLogoShopify style={{ fontSize: 50 }} />
 
-        <p
-          className="logo-text"
-          onClick={() => navigate("/")}
-        >
+        <p className="logo-text" onClick={() => navigate("/")}>
           Abdullah Shop Center
         </p>
       </div>
@@ -43,13 +33,14 @@ function Header() {
       <div className="flex-row">
         <input className="search-input" type="text" placeholder="Search here" />
 
-        <div>
-          {dark ? (
-            <CiLight className="icon" onClick={() => setDark(false)} />
-          ) : (
-            <IoIosMoon className="icon" onClick={() => setDark(true)} />
-          )}
-          <CiShoppingBasket className="icon" />
+        <div className="flex-row">
+          
+          <Badge
+            onClick={() => dispatch(setDrawer(true))} 
+            badgeContent={products.length}
+          >
+            <ShoppingCartIcon style={{ marginRight: 1 }} className="icon" />
+          </Badge>
         </div>
       </div>
     </header>
